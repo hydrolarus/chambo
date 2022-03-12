@@ -1,0 +1,35 @@
+function max(a: int, b: int) : int
+    ensures { result = a \/ result = b }
+    ensures { result >= a /\ result >= b }
+= if a >= b
+    then a
+    else b
+
+function min(a: int, b: int) : int
+    ensures { result = a \/ result = b }
+    ensures { result <= a /\ result <= b }
+= if a >= b
+    then b
+    else a
+
+
+function diff'(a: int, b: int) : int
+    requires { a > b }
+    ensures { b + result = a }
+= a - b
+
+function diff(a: int, b: int) : int
+    ensures { a + result = b \/ a = b + result }
+=
+    if a = b then
+        0
+    else
+        diff'(
+            a: max(a: a, b: b),
+            b: min(a: a, b: b),
+        )
+
+
+function vc_test() : ()
+    ensures { forall x:int . 0 <= x && x <= 6 ==> x <= 4 }
+= ()
