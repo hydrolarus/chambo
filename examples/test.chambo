@@ -28,8 +28,3 @@ function diff(a: int, b: int) : int
             a: max(a: a, b: b),
             b: min(a: a, b: b),
         )
-
-
-function vc_test() : ()
-    ensures { forall x:int . 0 <= x && x <= 6 ==> x <= 4 }
-= ()
