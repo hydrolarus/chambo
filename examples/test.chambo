@@ -1,6 +1,8 @@
 function max(a: int, b: int) : int
     ensures { result = a \/ result = b }
     ensures { result >= a /\ result >= b }
+    ensures { a > b ==> result = a }
+    ensures { b > a ==> result = b }
 = if a >= b
     then a
     else b
@@ -8,6 +10,8 @@ function max(a: int, b: int) : int
 function min(a: int, b: int) : int
     ensures { result = a \/ result = b }
     ensures { result <= a /\ result <= b }
+    ensures { a < b ==> result = a }
+    ensures { b < a ==> result = b }
 = if a >= b
     then b
     else a
@@ -15,6 +19,7 @@ function min(a: int, b: int) : int
 
 function diff'(a: int, b: int) : int
     requires { a > b }
+    ensures { result > 0 }
     ensures { b + result = a }
 = a - b
 

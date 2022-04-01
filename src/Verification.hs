@@ -177,6 +177,13 @@ genVCs e@TEUnitLiteral = done e
 genVCs e@(TEBinOp op a b) = do
     withTopFalse $ genVCs a
     withTopFalse $ genVCs b
+    case op of
+        OpDiv -> do
+            let cond  = TEBinOp OpNeq b (TEIntLiteral 0)
+                cond' = weakenExpr cond
+                term = TExpr cond' (Just cond)
+            withPath "div-rhs" $ makeVC term
+        _ -> pure ()
     done e
 genVCs e@(TEPrefixOp op a) = do
     genVCs a
